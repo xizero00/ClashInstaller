@@ -7,15 +7,19 @@ This is a simple shell script to install/uninstall clash-core-premium for linux.
 ```
 git clone https://github.com/MalinrRuwan/ClashInstaller.git && cd ClashInstaller && chmod +x clash-install.sh && sudo ./clash-install.sh
 ```
+
+```
+git clone https://github.com/xizero00/ClashInstaller.git && cd ClashInstaller && chmod +x clash-install.sh && sudo ./clash-install.sh
+```
 ## Uninstall command
 
 ```
-git clone https://github.com/MalinrRuwan/ClashInstaller.git && cd ClashInstaller && chmod +x clash-uninstall.sh && sudo ./clash-uninstall.sh
+git clone https://github.com/xizero00/ClashInstaller.git && cd ClashInstaller && chmod +x clash-uninstall.sh && sudo ./clash-uninstall.sh
 ```
 ## Usage
 > This shell script uses a systemd.service file to control the clash core
 
-> Binary, webUI, configuration are stored in /etc/clash
+> Binary, webUI, configuration are stored in /usr/local/clash
 
 > To change the configuraton, update /etc/clash/configs/config.yaml
 
