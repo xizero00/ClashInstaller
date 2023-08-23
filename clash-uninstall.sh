@@ -2,14 +2,16 @@ if [[ $EUID -ne 0 ]]; then
     echo "$0  not running as root. Run using sudo."
     exit 2
 fi
-systemctl disable clash
-systemctl stop clash
-rm -rf /etc/clash
+sudo systemctl disable clash
+sudo systemctl stop clash
+rm -rf /usr/local/clash
 rm -rf /etc/systemd/system/clash.service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 
 echo "
 *****************************
 Clash uninstalled successfully
 *****************************
+The configuration file is at /usr/clash
+You can delete it mannually！
 "

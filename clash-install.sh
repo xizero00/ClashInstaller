@@ -4,16 +4,18 @@ if [[ $EUID -ne 0 ]]; then
     exit 2
 fi
 
-mkdir /etc/clash
-mkdir /etc/clash/web-ui
-mkdir /etc/clash/configs
+sudo mkdir /etc/clash
+sudo mkdir /etc/clash/web-ui
+sudo mkdir /etc/clash/configs
 
-wget https://release.dreamacro.workers.dev/latest/clash-linux-amd64-v3-latest.gz
+if [[ ! -e FILE ]]; then
+	wget https://release.dreamacro.workers.dev/latest/clash-linux-amd64-v3-latest.gz
+fi
 gunzip clash-linux-amd64-v3-latest.gz
-mv clash-linux-amd64-v3-latest clash
-mv clash /etc/clash
-rm -rf clash-linux-amd64-v3-latest.gz
-chmod +x /etc/clash/clash
+sudo mv clash-linux-amd64-v3-latest clash
+sudo mv clash /usr/local/clash
+# rm -rf clash-linux-amd64-v3-latest.gz
+sudo chmod +x /usr/local/clash
 
 
 cat << EOF > /etc/systemd/system/clash.service
@@ -24,7 +26,7 @@ After=network.target
 [Service]
 Type=simple
 Restart=always
-ExecStart=/etc/clash/clash -d /etc/clash/configs
+ExecStart=/usr/local/clash -d /etc/clash/configs
 RestartSec=5
 
 [Install]
@@ -33,17 +35,20 @@ EOF
 
 sudo systemctl daemon-reload
 
-wget https://github.com/haishanh/yacd/releases/download/v0.3.6/yacd.tar.xz
-tar -xvf yacd.tar.xz
-rm -rf yacd.tar.xz
-mv public /etc/clash/web-ui
+if [[ ! -e FILE ]]; then
+	wget https://github.com/haishanh/yacd/releases/download/v0.3.6/yacd.tar.xz
+fi
 
-systemctl start clash.service
+tar -xvf yacd.tar.xz
+#rm -rf yacd.tar.xz
+sudo mv public /etc/clash/web-ui
+
+sudo systemctl start clash.service
 
 echo "Waiting 10 seconds to download some files"
 sleep 10
 
-systemctl stop clash.service
+sudo systemctl stop clash.service
 
 echo "
 *****************************************************************************
